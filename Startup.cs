@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using vega.Persistance;
+using AutoMapper;
 
 namespace WebApplicationBasic
 {
@@ -20,6 +23,7 @@ namespace WebApplicationBasic
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            
             Configuration = builder.Build();
         }
 
@@ -28,6 +32,10 @@ namespace WebApplicationBasic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
+
+            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("Default")));
             // Add framework services.
             services.AddMvc();
         }
