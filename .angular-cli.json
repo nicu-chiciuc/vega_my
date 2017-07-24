@@ -1,11 +1,11 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "hello-world"
+    "name": "vega_my"
   },
   "apps": [
     {
-      "root": "src",
+      "root": "ClientApp",
       "outDir": "dist",
       "assets": [
         "assets",
