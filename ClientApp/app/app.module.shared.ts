@@ -1,6 +1,8 @@
+// import { AppErrorHandler } from "./app.error-handler";
 import { FormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { ToastrModule } from "ngx-toastr";
 
 import { VehicleService } from "./services/vehicle.service";
 import { VehicleFormComponent } from "./components/vehicle-form/vehicle-form.component";
@@ -22,6 +24,7 @@ export const sharedConfig: NgModule = {
   ],
   imports: [
     FormsModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "home", component: HomeComponent },
