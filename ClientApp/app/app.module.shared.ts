@@ -31,6 +31,7 @@ export const sharedConfig: NgModule = {
       { path: "counter", component: CounterComponent },
       { path: "fetch-data", component: FetchDataComponent },
       { path: "vehicles/new", component: VehicleFormComponent },
+      { path: "vehicles/:id", component: VehicleFormComponent },
       { path: "**", redirectTo: "home" }
     ])
   ],

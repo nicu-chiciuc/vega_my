@@ -22,15 +22,17 @@ namespace vega.Mapping
             CreateMap<Vehicle, VehicleResource>()
                 .ForMember(v => v.Make, opt => opt.MapFrom(v => v.Model.Make))
                 .ForMember(v => v.Contact, opt => opt.MapFrom(v => new ContactResource { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
-                .ForMember(v => v.Features, opt => 
-                    opt.MapFrom(v => 
+                .ForMember(v => v.Features, opt =>
+                    opt.MapFrom(v =>
                         v.Features.Select(f =>
-                            new KeyValuePairResource {
+                            new KeyValuePairResource
+                            {
                                 Id = f.Feature.Id,
-                                Name = f.Feature.Name}
+                                Name = f.Feature.Name
+                            }
                             )));
-                
-            
+
+
 
 
 
@@ -41,23 +43,22 @@ namespace vega.Mapping
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
                 .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.Contact.Phone))
                 .ForMember(v => v.Features, opt => opt.Ignore())
-                .AfterMap((vr, v) => {
+                .AfterMap((vr, v) =>
+                {
+
                     // remove unselected features
-
-
                     var removedFeatures = v.Features
-                        .Where(f => !vr.Features.Contains(f.FeatureId)); 
+                        .Where(f => !vr.Features.Contains(f.FeatureId));
 
-                    foreach (var f in removedFeatures)
+                    foreach (var f in removedFeatures.ToList())
                         v.Features.Remove(f);
 
                     // add newly selected features
-
                     var addedFeatures = vr.Features
                         .Where(fid => !v.Features.Any(f => f.FeatureId == fid))
-                        .Select(id => new VehicleFeature {FeatureId = id});
+                        .Select(id => new VehicleFeature { FeatureId = id });
 
-                    foreach (var f in addedFeatures)
+                    foreach (var f in addedFeatures.ToList())
                         v.Features.Add(f);
                 });
         }

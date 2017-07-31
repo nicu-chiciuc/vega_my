@@ -2,6 +2,12 @@
 # start docker image
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=MyComplexPassword!234' -p 1433:1433 -d microsoft/mssql-server-linux
 
+# some files disappear sometimes and webpack has to rebuild them
+webpack --config .\webpack.config.js
+webpack --config .\webpack.config.vendor.js
+
+# starting the app and watching for changes
+dotnet watch run
 
 # add migration
 dotnet ef migrations add InitialModel

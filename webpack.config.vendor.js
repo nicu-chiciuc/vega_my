@@ -37,6 +37,8 @@ module.exports = env => {
         "ngx-toastr",
         "ngx-toastr/toastr.css",
         "jquery",
+        "raven-js",
+        "lodash",
         "zone.js"
       ]
     },

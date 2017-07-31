@@ -1,11 +1,25 @@
 import { ToastrService } from "ngx-toastr";
-import { ErrorHandler, Inject } from "@angular/core";
+import {
+  ErrorHandler,
+  Inject,
+  Injector,
+  Injectable,
+  isDevMode
+} from "@angular/core";
+import * as Raven from "raven-js";
 
+@Injectable()
 export class AppErrorHandler implements ErrorHandler {
-  constructor(@Inject(ToastrService) private toastrService: ToastrService) {}
+  toastrService: ToastrService;
+  constructor(private injector: Injector) {}
 
-  handleError(erro: any): void {
-    console.log("fuck");
+  handleError(error: any): void {
+    if (!isDevMode()) Raven.captureException(error.originalError || error);
+    else throw error;
+
+    this.toastrService = this.injector.get(ToastrService);
+
+    console.log("the error");
 
     this.toastrService.error("An unexpected error occured.", "Error");
   }
