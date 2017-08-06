@@ -1,4 +1,5 @@
 import { PaginationComponent } from "./components/shared/pagination.component";
+import { ViewVehicleComponent } from "./components/view-vehicle/view-vehicle";
 import { VehicleListComponent } from "./components/vehicle-list/vehicle-list.component";
 // import { AppErrorHandler } from "./app.error-handler";
 import { FormsModule } from "@angular/forms";
@@ -24,7 +25,8 @@ export const sharedConfig: NgModule = {
     HomeComponent,
     VehicleFormComponent,
     VehicleListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewVehicleComponent
   ],
   imports: [
     FormsModule,
@@ -35,7 +37,8 @@ export const sharedConfig: NgModule = {
       { path: "counter", component: CounterComponent },
       { path: "fetch-data", component: FetchDataComponent },
       { path: "vehicles/new", component: VehicleFormComponent },
-      { path: "vehicles/:id", component: VehicleFormComponent },
+      { path: "vehicles/:id", component: ViewVehicleComponent },
+      { path: "vehicles/edit/:id", component: VehicleFormComponent },
       { path: "vehicles", component: VehicleListComponent },
       { path: "**", redirectTo: "home" }
     ])
