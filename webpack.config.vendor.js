@@ -38,6 +38,7 @@ module.exports = env => {
         "ngx-toastr/toastr.css",
         "jquery",
         "raven-js",
+        "font-awesome/css/font-awesome.css",
         "lodash",
         "zone.js"
       ]

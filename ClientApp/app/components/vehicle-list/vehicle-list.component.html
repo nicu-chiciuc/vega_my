@@ -8,7 +8,7 @@
         <select name=""
                 id="make"
                 class="form-control"
-                [(ngModel)]="filter.makeId"
+                [(ngModel)]="query.makeId"
                 (change)="onFilterChange()">
 
             <option value=""></option>
@@ -27,16 +27,33 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Contact Name</th>
-            <th></th>
+            <th *ngFor="let c of columns">
+
+                <div *ngIf="c.isSortable"
+                     (click)="sortBy(c.key)">
+
+                    {{c.title}}
+                    <i *ngIf="query.sortBy == c.key"
+                       class="fa"
+                       [class.fa-sort-asc]="query.isSortAscending"
+                
+                       [class.fa-sort-desc]="!query.isSortAscending">
+                        
+                    </i>
+
+                </div>
+
+                <div *ngIf="!c.isSortable">
+                    {{c.title}}
+                </div>
+
+
+            </th>
         </tr>
     </thead>
 
     <tbody>
-        <tr *ngFor="let vehicle of vehicles">
+        <tr *ngFor="let vehicle of queryResult.items">
             <th>{{vehicle.id}} </th>
             <th>{{vehicle.make.name}} </th>
             <th>{{vehicle.model.name}} </th>
@@ -44,3 +61,9 @@
         </tr>
     </tbody>
 </table>
+
+<pagination [total-items]="queryResult.totalItems"
+            [page-size]="query.pageSize"
+            (page-changed)="onPageChange($event)">
+
+</pagination>
