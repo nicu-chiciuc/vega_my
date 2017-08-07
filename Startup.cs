@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using vega.Persistance;
 using AutoMapper;
 using vega.Core;
+using vega.Models;
 
 namespace WebApplicationBasic
 {
@@ -24,7 +25,7 @@ namespace WebApplicationBasic
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            
+
             Configuration = builder.Build();
         }
 
@@ -33,6 +34,8 @@ namespace WebApplicationBasic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -41,7 +44,7 @@ namespace WebApplicationBasic
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Default")));
 
-            
+
             // Add framework services.
             services.AddMvc();
         }
@@ -55,7 +58,8 @@ namespace WebApplicationBasic
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
                     HotModuleReplacement = true
                 });
             }

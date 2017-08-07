@@ -112,7 +112,12 @@ export class VehicleFormComponent {
         );
       });
     } else {
-      this.vehicleService.create(this.vehicle).subscribe(x => console.log(x));
+      this.vehicleService.create(this.vehicle).subscribe(x => {
+        this.toastrService.success(
+          "A new vehicle was added",
+          "Success for you"
+        );
+      });
     }
   }
 }

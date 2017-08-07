@@ -10,6 +10,8 @@ namespace vega.Persistance
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Model> Models { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
         public VegaDbContext(DbContextOptions<VegaDbContext> options)
             : base(options)
         {
@@ -21,6 +23,6 @@ namespace vega.Persistance
             modelBuilder.Entity<VehicleFeature>()
                 .HasKey(vf => new { vf.VehicleId, vf.FeatureId });
         }
-        
+
     }
 }

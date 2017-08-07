@@ -83,12 +83,11 @@
                class="form-control"
                [(ngModel)]="vehicle.contact.phone"
                name="contactPhone"
-               #contactPhone
+               #contactPhone="ngModel"
                required> </div>
 
     <div class="alert alert-danger"
-         *ngIf="contactPhone.touched && !contactPhone.valid">
-        Please specify the contact phone</div>
+         *ngIf="contactPhone.touched && !contactPhone.valid">Please specify the contact phone</div>
 
 
     <div class="form-group">
