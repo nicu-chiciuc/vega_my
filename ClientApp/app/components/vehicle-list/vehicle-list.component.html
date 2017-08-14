@@ -58,6 +58,9 @@
             <th>{{vehicle.make.name}} </th>
             <th>{{vehicle.model.name}} </th>
             <th>{{vehicle.contact.name}} </th>
+            <td>
+                <a [routerLink]="['/vehicles/', vehicle.id]">View</a>
+            </td>
         </tr>
     </tbody>
 </table>

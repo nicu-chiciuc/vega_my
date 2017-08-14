@@ -14,13 +14,13 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private injector: Injector) {}
 
   handleError(error: any): void {
-    if (!isDevMode()) Raven.captureException(error.originalError || error);
-    else throw error;
-
     this.toastrService = this.injector.get(ToastrService);
 
     console.log("the error");
 
     this.toastrService.error("An unexpected error occured.", "Error");
+
+    if (!isDevMode()) Raven.captureException(error.originalError || error);
+    else throw error;
   }
 }

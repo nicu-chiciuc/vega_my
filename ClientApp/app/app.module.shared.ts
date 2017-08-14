@@ -1,9 +1,17 @@
+import { BrowserXhr } from "@angular/http";
+import {
+  BrowserXhrWithProgress,
+  ProgressService
+} from "./services/progress.service";
+import { PhotoService } from "./services/photo.service";
+import { AppErrorHandler } from "./app.error-handler";
+
 import { PaginationComponent } from "./components/shared/pagination.component";
 import { ViewVehicleComponent } from "./components/view-vehicle/view-vehicle";
 import { VehicleListComponent } from "./components/vehicle-list/vehicle-list.component";
 // import { AppErrorHandler } from "./app.error-handler";
 import { FormsModule } from "@angular/forms";
-import { NgModule } from "@angular/core";
+import { NgModule, ErrorHandler } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
 
@@ -43,5 +51,12 @@ export const sharedConfig: NgModule = {
       { path: "**", redirectTo: "home" }
     ])
   ],
-  providers: [VehicleService]
+  providers: [
+    VehicleService,
+    PhotoService,
+    ProgressService,
+    { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+
+    { provide: ErrorHandler, useClass: AppErrorHandler }
+  ]
 };

@@ -1,6 +1,5 @@
 import * as Raven from "raven-js";
-import { AppErrorHandler } from "./app.error-handler";
-import { NgModule, ErrorHandler } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
@@ -23,8 +22,8 @@ Raven.config(
     ...sharedConfig.imports
   ],
   providers: [
-    { provide: "ORIGIN_URL", useValue: location.origin },
-    { provide: ErrorHandler, useClass: AppErrorHandler }
+    ...sharedConfig.providers,
+    { provide: "ORIGIN_URL", useValue: location.origin }
   ]
 })
 export class AppModule {}
