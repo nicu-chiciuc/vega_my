@@ -7,6 +7,7 @@ using vega.Controllers.Resources;
 using vega.Models;
 using vega.Core;
 using vega.Persistance;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vega.Controllers
 {
@@ -20,6 +21,7 @@ namespace vega.Controllers
             this.context = context;
         }
 
+        [Authorize]
         [HttpGet("/api/features")]
         public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
         {

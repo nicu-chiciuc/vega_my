@@ -71,6 +71,13 @@ namespace WebApplicationBasic
 
             app.UseStaticFiles();
 
+            var options = new JwtBearerOptions
+            {
+                Audience = "https://api.vega.com",
+                Authority = "https://vegaprojn.auth0.com/"
+            };
+            app.UseJwtBearerAuthentication(options);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

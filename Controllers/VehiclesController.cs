@@ -7,6 +7,7 @@ using vega.Controllers.Resources;
 using vega.Models;
 using vega.Core;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vega.Controllers
 {
@@ -27,6 +28,7 @@ namespace vega.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource)
         {
@@ -48,6 +50,7 @@ namespace vega.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource vehicleResource)
         {
@@ -71,6 +74,7 @@ namespace vega.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
