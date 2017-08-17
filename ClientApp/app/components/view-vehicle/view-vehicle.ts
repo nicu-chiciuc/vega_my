@@ -1,4 +1,9 @@
-import { ProgressService } from "./../../services/progress.service";
+import { AuthService } from "./../../services/auth.service";
+import { BrowserXhr } from "@angular/http";
+import {
+  ProgressService,
+  BrowserXhrWithProgress
+} from "./../../services/progress.service";
 import { PhotoService } from "./../../services/photo.service";
 import { ToastrService } from "ngx-toastr";
 import { VehicleService } from "./../../services/vehicle.service";
@@ -12,7 +17,11 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  templateUrl: "view-vehicle.html"
+  templateUrl: "view-vehicle.html",
+  providers: [
+    { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+    ProgressService
+  ]
 })
 export class ViewVehicleComponent implements OnInit {
   @ViewChild("fileInput") fileInput: ElementRef;
@@ -28,7 +37,8 @@ export class ViewVehicleComponent implements OnInit {
     private toastr: ToastrService,
     private progressService: ProgressService,
     private vehicleService: VehicleService,
-    private photoService: PhotoService
+    private photoService: PhotoService,
+    private auth: AuthService
   ) {
     route.params.subscribe(p => {
       this.vehicleId = +p["id"];

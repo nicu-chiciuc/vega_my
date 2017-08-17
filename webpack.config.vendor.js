@@ -42,7 +42,9 @@ module.exports = env => {
         "raven-js",
         "font-awesome/css/font-awesome.css",
         "lodash",
-        "zone.js"
+        "zone.js",
+        "chart.js",
+        "angular2-chartjs"
       ]
     },
     output: {

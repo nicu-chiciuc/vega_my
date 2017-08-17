@@ -1,3 +1,7 @@
+import { AdminAuthGuard } from "./services/admin-auth-guard.service";
+import { AuthGuard } from "./services/auth-guard.service";
+import { AdminComponent } from "./components/admin/admin.component";
+import { AppModule } from "./app.module.server";
 import { AuthService } from "./services/auth.service";
 import { BrowserXhr } from "@angular/http";
 import {
@@ -23,6 +27,8 @@ import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { HomeComponent } from "./components/home/home.component";
 import { FetchDataComponent } from "./components/fetchdata/fetchdata.component";
 import { CounterComponent } from "./components/counter/counter.component";
+import { AUTH_PROVIDERS } from "angular2-jwt";
+import { ChartModule } from "angular2-chartjs";
 
 export const sharedConfig: NgModule = {
   bootstrap: [AppComponent],
@@ -35,19 +41,34 @@ export const sharedConfig: NgModule = {
     VehicleFormComponent,
     VehicleListComponent,
     PaginationComponent,
-    ViewVehicleComponent
+    ViewVehicleComponent,
+    AdminComponent
   ],
   imports: [
     FormsModule,
+    ChartModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: "", redirectTo: "vehicles", pathMatch: "full" },
       { path: "home", component: HomeComponent },
       { path: "counter", component: CounterComponent },
+      {
+        path: "admin",
+        component: AdminComponent,
+        canActivate: [AdminAuthGuard]
+      },
       { path: "fetch-data", component: FetchDataComponent },
-      { path: "vehicles/new", component: VehicleFormComponent },
+      {
+        path: "vehicles/new",
+        component: VehicleFormComponent,
+        canActivate: [AuthGuard]
+      },
       { path: "vehicles/:id", component: ViewVehicleComponent },
-      { path: "vehicles/edit/:id", component: VehicleFormComponent },
+      {
+        path: "vehicles/edit/:id",
+        component: VehicleFormComponent,
+        canActivate: [AuthGuard]
+      },
       { path: "vehicles", component: VehicleListComponent },
       { path: "**", redirectTo: "home" }
     ])
@@ -55,9 +76,11 @@ export const sharedConfig: NgModule = {
   providers: [
     VehicleService,
     PhotoService,
-    ProgressService,
+
     AuthService,
-    { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+    AuthGuard,
+    AdminAuthGuard,
+    AUTH_PROVIDERS,
 
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ]

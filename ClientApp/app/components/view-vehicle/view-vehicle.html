@@ -41,9 +41,11 @@
             </ul>
             <br/>
             <p>
-                <a class="btn btn-primary"
+                <a *ngIf="auth.isAuthenticated()"
+                   class="btn btn-primary"
                    [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-                <button class="btn btn-danger"
+                <button *ngIf="auth.isAuthenticated()"
+                        class="btn btn-danger"
                         (click)="delete()">Delete</button>
                 <a class="btn btn-default"
                    [routerLink]="['/vehicles']">View All Vehicles</a>
@@ -54,7 +56,8 @@
              class="tab-pane"
              id="photos">
             <h2>Photos</h2>
-            <input type="file"
+            <input *ngIf="auth.isAuthenticated()"
+                   type="file"
                    (change)="uploadPhoto()"
                    #fileInput>
 

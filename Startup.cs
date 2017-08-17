@@ -13,6 +13,7 @@ using vega.Persistance;
 using AutoMapper;
 using vega.Core;
 using vega.Models;
+using vega.Controllers;
 
 namespace WebApplicationBasic
 {
@@ -45,6 +46,11 @@ namespace WebApplicationBasic
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Default")));
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.RequireAdminRole,
+                    policy => policy.RequireClaim("https://vega.com/roles", "Admin"));
+            });
 
             // Add framework services.
             services.AddMvc();

@@ -7,5 +7,7 @@ import { Component } from "@angular/core";
   styleUrls: ["./navmenu.component.css"]
 })
 export class NavMenuComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) {
+    console.log(auth);
+  }
 }
